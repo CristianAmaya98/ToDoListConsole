@@ -1,5 +1,6 @@
+require('colors');
 const inquirer = require('inquirer');
-const colors = require('colors');
+const { table } = require('table')
 
 const headerConsole = (mensaje = '') => {
 
@@ -17,6 +18,15 @@ const headerConsole = (mensaje = '') => {
     console.log(`    ${mensaje.toUpperCase()}    `.green);
     console.log(separador.green);
 }
+
+const notificationConsole = (message = '', status = true) => {
+    if (!status) {
+        console.log(`=> ${message}`.red);
+        return;
+    }
+    console.log(`=> ${message}`.green);
+}
+
 
 
 const homeConsole = (itemsMenu = [], header = false) => {
@@ -58,11 +68,47 @@ const selectConsole = (message = '', itemsOption = []) => {
 }
 
 
+const tableConsole = (header = '', data = []) => {
+    const config = {
+        border: {
+            topBody: `─`,
+            topJoin: `┬`,
+            topLeft: `┌`,
+            topRight: `┐`,
+
+            bottomBody: `─`,
+            bottomJoin: `┴`,
+            bottomLeft: `└`,
+            bottomRight: `┘`,
+
+            bodyLeft: `│`,
+            bodyRight: `│`,
+            bodyJoin: `│`,
+
+            joinBody: `─`,
+            joinLeft: `├`,
+            joinRight: `┤`,
+            joinJoin: `┼`
+        },
+        columnDefault: {
+            width: 30,
+        },
+        header: {
+            alignment: 'center',
+            content: header,
+        },
+    };
+
+    console.log(table(data, config));
+}
+
 
 
 module.exports = {
     homeConsole,
     headerConsole,
     inputConsole,
-    selectConsole
+    selectConsole,
+    tableConsole,
+    notificationConsole
 }
